@@ -1,5 +1,5 @@
 void rfid(){
-   // Look for new cards
+
   if ( ! mfrc522.PICC_IsNewCardPresent()) 
   {
     return;
@@ -12,7 +12,7 @@ void rfid(){
   //Show UID on serial monitor
   Serial.println();
   Serial.print(" UID tag :");
-  String content= "";
+  content="";
   byte letter;
   for (byte i = 0; i < mfrc522.uid.size; i++) 
   {
@@ -36,6 +36,7 @@ void rfid(){
   
   else   {
     Serial.println(" Access Denied ");
-    delay(3000);
+    delay(2000);
   }  
 }
+  
