@@ -9,6 +9,8 @@
 //FirebaseESP8266.h must be included before ESP8266WiFi.h
 #include "FirebaseESP8266.h"
 #include <ESP8266WiFi.h>
+#include <LiquidCrystal_I2C.h>
+#include <Servo.h>
 
 //wifi firebase connection
 #define FIREBASE_HOST "nodemcu-3aeeb.firebaseio.com"
@@ -19,7 +21,8 @@
 //Define FirebaseESP8266 data object
 FirebaseData firebaseData;
 
-
+Servo servo;
+LiquidCrystal_I2C lcd(0x27, 20, 4);
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
 int statuss = 0;
 int out = 0;
@@ -35,6 +38,19 @@ void setup()
   mfrc522.PCD_Init();   // Initiate MFRC522
   //////////////////////////////////////
 
+  servo.attach(2);
+  servo.write(0);
+
+  lcd.begin(20,4);
+  lcd.init();
+
+  // Turn on the backlight.
+  lcd.backlight();
+  lcd_d(0,7,"Welcome");
+  delay(3000);
+  lcd.clear();
+  lcd_d(1,1,"Use Your RFID Card");
+  
   //////wifi//////
   
 
@@ -69,8 +85,8 @@ void setup()
 }
 void loop() 
 {
-  wifiData("46546",769374789);
-   wifiData("12324",769374789);
+  //wifiData("46546",769374789);
+   //wifiData("12324",769374789);
   
  rfid();
  if(statuss==1){
